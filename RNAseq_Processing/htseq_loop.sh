@@ -1,0 +1,1 @@
+cat names3.txt | tr -d '\015' |  while read var; do sbatch --export=var=${var} HTseq_rnaseq.sh; done
