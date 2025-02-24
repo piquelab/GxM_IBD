@@ -1,0 +1,2 @@
+ module load samtools/1.11
+bcftools view -i'ID=@/rs/rs_grp_ibdeqtl/FastQTL/ileum_protein_coding_residuals/qnorm_residual_analysis/permutations/analysis/PC20_significant_topeeQTL_snps.txt' /rs/rs_grp_ibdeqtl/FastQTL/ileum_protein_coding_residuals/IBD_eQTL_ileum_DNA_genotypes_filtered_SNPs.vcf.gz | bcftools query -f '%CHROM\t%POS\t%ID[\t%DS]\n' > PC20_signif_dosages.txt
