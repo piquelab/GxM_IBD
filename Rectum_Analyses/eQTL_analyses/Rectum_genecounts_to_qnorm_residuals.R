@@ -132,11 +132,10 @@ library(data.table)
 library(dplyr)
 HTSeqanno <- data.frame(anno %>% group_by(ensgene) %>% summarise(minstart=min(start),maxstop=max(end), chr=first(chr), strand=first(strand)))
 rownames(HTSeqanno) <- HTSeqanno$ensgene
-# add TSS and stop:
+# add TSS and TSS+1 based on strand orientation
 HTSeqanno[HTSeqanno$strand==1,"TSS"] <- HTSeqanno[HTSeqanno$strand==1,"minstart"]
-HTSeqanno[HTSeqanno$strand==1,"STOP"] <- HTSeqanno[HTSeqanno$strand==1,"maxstop"]
-HTSeqanno[HTSeqanno$strand==-1,"TSS"] <- HTSeqanno[HTSeqanno$strand==-1,"minstart"]
-HTSeqanno[HTSeqanno$strand==-1,"STOP"] <- HTSeqanno[HTSeqanno$strand==-1,"maxstop"]
+HTSeqanno[HTSeqanno$strand==-1,"TSS"] <- HTSeqanno[HTSeqanno$strand==-1,"maxstop"]
+HTSeqanno$STOP <- HTSeqanno$TSS + 1
 
 HTSeqanno <- HTSeqanno[rownames(Res),]
 dataFQTL <- cbind(HTSeqanno$chr, HTSeqanno[,c("TSS","STOP","ensgene")], Res)
